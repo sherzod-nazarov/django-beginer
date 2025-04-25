@@ -44,7 +44,30 @@
           </div>
         </div>
       </nav>
-    <h2>{{vaqt}}</h2>
+      <div class="container">
+         <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Model kiriting</label>
+            <input type="text" class="form-control" name="model" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">faqat model kiriting</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">nomini kiriting</label>
+            <input type="text" class="form-control" name="nomi">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">rangni kiriting</label>
+            <input type="text" class="form-control" name="rang" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">faqat model kiriting</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">tezlik kiriting</label>
+            <input type="text" class="form-control" name="tezlik">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
