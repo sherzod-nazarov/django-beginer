@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+{% block title %} {{ moshin.name }}  {% endblock title %}
+{% load static %}
+{% block content %}
+
+      {% if moshin.rasm %}
+      <img width="100px" src="{{moshin.rasm.url}}" alt="moshina bor">
+      {% else %}
+      <img width="100px" src="{% static 'image/image.png' %}" alt="rasm bor static">
+      {% endif %}
+      <h2>Tazlik: {{ moshin.speed }} km/soat</h2>
+      <h3>Rangi: {{ moshin.color }}</h3>
+      <h1>{{ car1 }}</h1>
+
+{% endblock %}

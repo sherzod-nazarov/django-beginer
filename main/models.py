@@ -7,6 +7,7 @@ class CarAbout(models.Model):
     name = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
     color = models.CharField(max_length=20)
+    rasm = models.ImageField(upload_to="cars/", null=True, blank=True)
     speed = models.CharField(max_length=25)
 
 

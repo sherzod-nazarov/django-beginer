@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+{% block title %} Car ADD {% endblock title %}
+{% load static %}
+{% block content %}
+      <div class="container">
+         <form method="POST", enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Model kiriting</label>
+            <input type="text" class="form-control" name="model" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">faqat model kiriting</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">nomini kiriting</label>
+            <input type="text" class="form-control" name="nomi">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">rangni kiriting</label>
+            <input type="text" class="form-control" name="rang" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">faqat model kiriting</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Rasmni kiriting</label>
+            <input type="file" class="form-control" name="rasm">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">tezlik kiriting</label>
+            <input type="text" class="form-control" name="tezlik">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+
+      {% endblock %}
