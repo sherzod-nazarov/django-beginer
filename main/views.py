@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from datetime import datetime
 from .models import CarAbout
 import wikipedia
-
+from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate
 
 hozir = datetime.now()
 ismlar = ["Bexruz", "Sherzod", "Usmon", "Baxodir"]
@@ -23,8 +24,11 @@ def CarPage(request, id, name):
 
 
 def HomePage(request):
-    moshinalar = CarAbout.objects.all()
-    return render(request, 'home.html', {'moshinalar': moshinalar})
+    if request.user.is_authenticated:
+        moshinalar = CarAbout.objects.all()
+        return render(request, 'home.html', {'moshinalar': moshinalar})
+    else:
+        return redirect('signup')
 
 
 def AboutPage(request):
@@ -62,11 +66,6 @@ def UpdatePage(request, id):
 
 
 
-
-
-
-
-
 def DeleteCar(request, id):
     car = CarAbout.objects.get(id=id)
     car.delete()
@@ -75,5 +74,47 @@ def DeleteCar(request, id):
 
 
 
-def SignUp(request, id=2025, str="salom", slug="salom-slug"):
-    return render(request, 'signup.html', {'id':id, 'str':str, 'slug':slug})
+def SignUp(request):
+    if request.method == 'POST':
+        username = request.POST.get('name')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        if password2 == password1:
+            if User.objects.filter(username = username).exists():
+                print("bu nom oldin foydalanilgan")
+                return redirect('signup')
+            elif User.objects.filter(email=email).exists():
+                print("Bu emaildan oldin foydalanilgan")
+                return redirect('signup')
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password1)
+                user.save()
+                login(request, user)
+                print("Royhatdan o'tdingiz")
+                return redirect('home')
+        else:
+            print("parollar mos emas")
+            return redirect('signup')
+    return render(request, 'signup.html')
+
+
+def LoginPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('name')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            print("Royhatdan o'tdingiz")
+            return redirect('home')
+        else:
+            print("Xato qildingiz")
+    return render(request, 'login.html')
+
+
+
+
+def LogoutPage(request):
+    logout(request)
+    return redirect('home')
