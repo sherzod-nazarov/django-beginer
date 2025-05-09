@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
-from .models import CarAbout
+from .models import CarAbout, Categorys
 import wikipedia
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -9,10 +9,19 @@ from django.contrib.auth import login, logout, authenticate
 hozir = datetime.now()
 ismlar = ["Bexruz", "Sherzod", "Usmon", "Baxodir"]
 
+def CategoryPage(request, slug):
+    moshinlar = CarAbout.objects.filter(model__slug=slug)
+    category = Categorys.objects.get(slug=slug)
+    return render(request, 'category.html', {'moshinalar':moshinlar, 'category':category})
+
+
+
+
 
 def CarPage(request, id, name):
     moshin = CarAbout.objects.get(id=id)
     nomi = moshin.name
+    
     try:
         wikipedia.set_lang('uz')
         car1 = wikipedia.summary(f"{nomi}")
