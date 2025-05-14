@@ -42,7 +42,7 @@ def HomePage(request):
     else:
         return redirect('signup')
 
-
+"""Bu bizning loyiha emas"""
 def AboutPage(request):
     categorys = Categorys.objects.all()
     if request.method == "POST":
