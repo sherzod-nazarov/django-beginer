@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from datetime import datetime
 from .models import CarAbout, Categorys
 import wikipedia
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.core.paginator import Paginator
+
 
 hozir = datetime.now()
 ismlar = ["Bexruz", "Sherzod", "Usmon", "Baxodir"]
@@ -21,7 +22,6 @@ def CategoryPage(request, slug):
 def CarPage(request, id, name):
     moshin = CarAbout.objects.get(id=id)
     nomi = moshin.name
-    
     try:
         wikipedia.set_lang('uz')
         car1 = wikipedia.summary(f"{nomi}")
@@ -35,23 +35,26 @@ def CarPage(request, id, name):
 def HomePage(request):
     if request.user.is_authenticated:
         moshinalar = CarAbout.objects.all()
-        return render(request, 'home.html', {'moshinalar': moshinalar})
+        paginator = Paginator(moshinalar, 1)
+        page = request.GET.get('page')
+        posts = paginator.get_page(page)
+        return render(request, 'home.html', {'posts': posts, 'page':page})
     else:
         return redirect('signup')
 
 
 def AboutPage(request):
+    categorys = Categorys.objects.all()
     if request.method == "POST":
         name = request.POST.get('nomi')
-        model = request.POST.get('model')
+        model_id = request.POST.get('model')
         color = request.POST.get('rang')
         speed = request.POST.get('tezlik')
         rasm = request.FILES.get('rasm')
-        print(rasm)
-        CarAbout.objects.create(name=name, rasm=rasm, model=model, color=color, speed=speed)
-        print(name, model, color, speed)
+        model_name = Categorys.objects.get(id=model_id)
+        CarAbout.objects.create(name=name, rasm=rasm, model=model_name, color=color, speed=speed)
         return redirect('home')
-    return render(request, 'about.html', {'vaqt':hozir})
+    return render(request, 'about.html', {'categorys':categorys})
 
 
 

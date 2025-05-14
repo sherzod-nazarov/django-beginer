@@ -28,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for moshin in moshinalar %}
+        {% for moshin in posts %}
         <tr>
           <th scope="row">{{ moshin.id }}</th>
           <td>{{ moshin.model }}</td>
@@ -49,8 +49,11 @@
         {% endfor %}
       </tbody>
     </table>
-
   </div>
+</div>
+
+<div class="container">
+  {% include 'paginator.html' with page=posts %}
 </div>
 
 {% endblock %}
